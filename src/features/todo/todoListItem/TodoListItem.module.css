@@ -1,0 +1,31 @@
+.itemContainer {
+  border-bottom: 1px solid rgb(226, 226, 226);
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.textContainer {
+  flex: 1;
+}
+
+.checkMarkContainer {
+  display: inline-block;
+  width: 2rem;
+}
+
+.editButtonsContainer {
+  display: flex;
+  justify-content: right;
+  margin-left: 1rem;
+}
+
+.editButtons {
+  margin-right: 0.5rem !important;
+  /* Correct the button size */
+  width: 2rem !important;
+  height: 2rem !important;
+  padding: 0 !important;
+}

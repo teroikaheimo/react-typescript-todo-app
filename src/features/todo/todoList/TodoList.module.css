@@ -1,0 +1,22 @@
+.header {
+  text-align: center;
+  font-size: 2rem;
+  font-style: bold;
+  color: whitesmoke;
+  background-color: #3b82f6;
+  border-radius: 6px 6px 0 0;
+  padding: 1.25rem;
+}
+
+.footer {
+  display: flex;
+  justify-content: right;
+}
+
+.card {
+  width: 600px;
+}
+
+.card .p-card-body {
+  padding: 0 !important;
+}

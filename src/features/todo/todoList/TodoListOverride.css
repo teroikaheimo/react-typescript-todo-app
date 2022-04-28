@@ -1,0 +1,8 @@
+/** Styles in this file are not module specific, so remember to limit them! */
+.override-card-styles .p-card-body,
+.p-card-content {
+  padding: 0 !important;
+}
+.override-card-styles .p-card-footer {
+  padding: 1.25rem !important;
+}
