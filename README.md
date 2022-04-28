@@ -1,3 +1,5 @@
+![Data Flow](/repository/documentation/UI.png "UI")
+
 # Simple React TODO App
 This app was created to learn new things and see how React has evolved(4years since last project with React)
 Created using PrimeReact, Axios, RxJS and Mirage.
