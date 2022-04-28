@@ -1,4 +1,4 @@
-![Data Flow](../react-typescript-todo-app/documentation/UI.PNG?raw=true "UI")
+![Data Flow](documentation/UI.PNG?raw=true "UI")
 
 # Simple React TODO App
 
@@ -7,7 +7,7 @@ Created using PrimeReact, Axios, RxJS and Mirage.
 
 ## Data Flow
 
-![Data Flow](../react-typescript-todo-app/documentation/data flow.svg?raw=true "Data Flow")
+![Data Flow](documentation/dataFlow.png?raw=true "Data Flow")
 
 ## Known bugs
 
