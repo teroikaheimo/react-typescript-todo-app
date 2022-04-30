@@ -11,12 +11,13 @@ Created using PrimeReact, Axios, RxJS and Mirage.
 
 ## Known bugs
 
-- Todo items are fetched two times when the app is opened in the browser. Did not have the time to find out why.
+- ~~Todo items are fetched two times when the app is opened in the browser.~~ Was caused by React.StrictMode tag at index.tsx file. The strict mode intentionally invokes useState, useMemo, etc. [React doc - Strict mode](https://reactjs.org/docs/strict-mode.html)
 
 ## To improve
 
 - Unit tests.
-- Fix known bugs.
+- Text localization.
+- User accounts so the app could be used by multiple different users and the remote storage would make more sense.
 
 ## Available Scripts
 

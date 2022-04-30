@@ -1,7 +1,7 @@
 import { debounceTime, filter, Subject } from "rxjs";
 import { loggerService } from "../../services/loggerService";
 import { toastService } from "../toast/ToastService";
-import { todoResource } from "../todoResource";
+import todoResource from "../todoResource";
 import { ITodoItem } from "./types/ITodoItem";
 
 /**
@@ -99,36 +99,44 @@ class TodoService {
 
   /**
    * Fetches the todo items list from remote and on success emits the received data thru the todoStateChanged subject.
+   * @returns true if the call succeeds.
    * OBS! This request will automatically be repeated if it fails.
    */
-  async remoteFetchItems() {
+  async remoteFetchItems(): Promise<boolean> {
     try {
       const { data } = await todoResource.getTodoItems();
       this._todoLocalState = data;
       this._todoStateChanged$.next(this._todoLocalState);
+      return true;
     } catch (error) {
       this.handleNetworkError("Fetching todo items failed.", error);
       this.retryRemoteCall(
         this.remoteFetchItems.bind(this),
-        "fetch todo items request"
+        "fetch todo items request",
+        "Todo items fetched successfully after retrying."
       );
+      return false;
     }
   }
 
   /**
    * Sync all items to the remote.
+   * @returns true if the call succeeds.
    * OBS! Is executed only if there is not pending retry for a request.
    * OBS! This request will automatically be repeated if it fails.
    */
-  private async remoteSyncState() {
+  private async remoteSyncState(): Promise<boolean> {
     try {
       await todoResource.syncState(this.todoLocalState);
+      return true;
     } catch (error) {
       this.handleNetworkError("Synching the state to remote failed.", error);
       this.retryRemoteCall(
         this.remoteSyncState.bind(this),
-        "sync state request"
+        "sync state request",
+        "State sync completed successfully after retrying."
       );
+      return false;
     }
   }
 
@@ -136,21 +144,32 @@ class TodoService {
    * Calls the provided method once after the retry time has passed.
    * @see timeToRetrySync
    */
-  private retryRemoteCall(remoteCall: () => void, failedRequestName: string) {
+  private async retryRemoteCall(
+    remoteCall: () => Promise<boolean>,
+    failedRequestName: string,
+    messageOnSuccess: string
+  ) {
     this.requestIsInRetryState = true;
     loggerService.logDebug(
       `Retrying failed ${failedRequestName} in ` +
         this.timeToRetrySync / 1000 +
         " seconds. "
     );
-    setTimeout(() => {
-      remoteCall();
+    setTimeout(async () => {
+      const isSuccess = await remoteCall();
+      if (isSuccess) {
+        this.showSuccessToast(messageOnSuccess);
+      }
       this.requestIsInRetryState = false;
     }, this.timeToRetrySync);
   }
 
   private showErrorToast(message: string) {
     toastService.showToast("error", "Error", message);
+  }
+
+  private showSuccessToast(message: string) {
+    toastService.showToast("success", "Success", message);
   }
 
   /** Handles error logging and shows a toast to the user when network request fails. */
@@ -160,4 +179,4 @@ class TodoService {
   }
 }
 
-export const todoService = new TodoService();
+export default new TodoService();

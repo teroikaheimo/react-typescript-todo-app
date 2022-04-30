@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { TodoList } from "../todoList/TodoList";
-import { todoService } from "../todoService";
-import { Spinner } from "../../spinner/SpinnerComponent";
+import TodoList from "../todoList/TodoList";
+import todoService from "../todoService";
+import Spinner from "../../spinner/SpinnerComponent";
 import { ITodoItem } from "../types/ITodoItem";
 import styles from "./TodoContainer.module.css";
 
-export function TodoContainer() {
+const TodoContainer = () => {
   const [todoItems, setTodoItems] = useState([]);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
 
@@ -19,7 +19,7 @@ export function TodoContainer() {
       });
     todoService.remoteFetchItems();
     // Clean up the subscription to avoid memory leaks.
-    return function cleanup() {
+    return () => {
       subscription.unsubscribe();
     };
   }, []);
@@ -35,4 +35,5 @@ export function TodoContainer() {
       </div>
     </div>
   );
-}
+};
+export default TodoContainer;

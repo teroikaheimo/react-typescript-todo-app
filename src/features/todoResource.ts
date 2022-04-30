@@ -10,4 +10,4 @@ class TodoResource {
     return Axios.post("/api/v1/todo/sync", items);
   }
 }
-export const todoResource = new TodoResource();
+export default new TodoResource();

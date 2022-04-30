@@ -1,12 +1,13 @@
-import { TodoListItem } from "../todoListItem/TodoListItem";
+import TodoListItem from "../todoListItem/TodoListItem";
 import { ITodoItem } from "../types/ITodoItem";
 import styles from "./TodoList.module.css";
 import "./TodoListOverride.css";
 import { Button } from "primereact/button";
 import { Card } from "primereact/card";
-import { todoService } from "../todoService";
+import todoService from "../todoService";
+import { memo } from "react";
 
-export function TodoList(props: { todoItems: ITodoItem[] }) {
+const TodoList = (props: { todoItems: ITodoItem[] }) => {
   function handleAddClick() {
     todoService.createItem();
   }
@@ -39,6 +40,10 @@ export function TodoList(props: { todoItems: ITodoItem[] }) {
           <TodoListItem key={item.id} item={item}></TodoListItem>
         ))}
       </div>
+      {props.todoItems.length === 0 && (
+        <div style={{ padding: "1rem" }}>Todo list is empty.</div>
+      )}
     </Card>
   );
-}
+};
+export default memo(TodoList);

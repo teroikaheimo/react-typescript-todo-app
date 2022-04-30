@@ -1,7 +1,8 @@
 import styles from './spinner.module.css';
 
-export function Spinner(){
+const Spinner = ()=>{
         return(<div className={styles.root}>
             <div className={styles.spinner}></div>
             </div>)
 }
+export default Spinner;

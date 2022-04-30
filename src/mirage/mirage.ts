@@ -19,7 +19,8 @@ createServer({
       "/api/v1/todo",
       (schema, request) => {
         requestCount++;
-        if (requestCount === 1 || requestCount % 3 === 0) {
+        // First request always fails.
+        if (requestCount === 1) {
           return new Response(400);
         }
         return new Response(200, {}, JSON.stringify(todoItemsState));
@@ -32,11 +33,12 @@ createServer({
       "/api/v1/todo/sync",
       (schema, request) => {
         requestCount++;
-        if (requestCount % 3 === 0) {
+        // Every fifth request fails.
+        if (requestCount % 5 === 0) {
           return new Response(400);
         }
         replaceItems(JSON.parse(request.requestBody));
-        loggerService.logInfo("State after sync: ",todoItemsState)
+        loggerService.logInfo("State after sync: ", todoItemsState);
         return new Response(200);
       },
       { timing: 1500 }

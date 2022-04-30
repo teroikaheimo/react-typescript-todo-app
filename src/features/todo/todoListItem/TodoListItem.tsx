@@ -1,11 +1,12 @@
 import { Button } from "primereact/button";
 import { InputTextarea } from "primereact/inputtextarea";
+import { memo } from "react";
 import { ChangeEvent, useReducer, useState } from "react";
-import { todoService } from "../todoService";
+import todoService from "../todoService";
 import { ITodoItemProps } from "../types/ITodoItemProps";
 import styles from "./TodoListItem.module.css";
 
-export function TodoListItem(props: ITodoItemProps) {
+const TodoListItem = (props: ITodoItemProps) => {
   const [isInEditMode, setIsInEditMode] = useState(props.item.openInEditState);
   const [editedText, setEditedText] = useState(props.item.text);
   const [, forceUpdate] = useReducer((x) => x + 1, 0);
@@ -38,6 +39,12 @@ export function TodoListItem(props: ITodoItemProps) {
     setEditedText(e.target.value);
   }
 
+  function handleKeyPress(e: React.KeyboardEvent<HTMLTextAreaElement>) {
+    if (e.code === "Enter") {
+      handleSaveClick();
+    }
+  }
+
   if (isInEditMode) {
     // EDIT MODE TEMPLATE
     return (
@@ -48,6 +55,7 @@ export function TodoListItem(props: ITodoItemProps) {
             style={{ width: "100%" }}
             value={editedText}
             onChange={(e) => handleOnChange(e)}
+            onKeyPress={(e) => handleKeyPress(e)}
             rows={1}
             autoResize
           />
@@ -125,4 +133,5 @@ export function TodoListItem(props: ITodoItemProps) {
       </div>
     );
   }
-}
+};
+export default memo(TodoListItem);
