@@ -12,7 +12,7 @@ class TodoService {
   requestIsInRetryState = false;
 
   /** Time in milliseconds to retry request. */
-  timeToRetrySync = 5000;
+  timeToRetrySync = 3000;
 
   /** Subject that emits every time the todo local state changes. */
   private _todoStateChanged$ = new Subject();
@@ -99,7 +99,7 @@ class TodoService {
 
   /**
    * Fetches the todo items list from remote and on success emits the received data thru the todoStateChanged subject.
-   * @returns true if the call succeeds.
+   * @returns true if the request succeeds.
    * OBS! This request will automatically be repeated if it fails.
    */
   async remoteFetchItems(): Promise<boolean> {
@@ -121,7 +121,7 @@ class TodoService {
 
   /**
    * Sync all items to the remote.
-   * @returns true if the call succeeds.
+   * @returns true if the request succeeds.
    * OBS! Is executed only if there is not pending retry for a request.
    * OBS! This request will automatically be repeated if it fails.
    */

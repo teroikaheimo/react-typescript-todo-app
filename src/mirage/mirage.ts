@@ -25,7 +25,7 @@ createServer({
         }
         return new Response(200, {}, JSON.stringify(todoItemsState));
       },
-      { timing: 2000 }
+      { timing: 1500 }
     );
 
     // Sync state
